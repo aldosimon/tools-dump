@@ -44,6 +44,7 @@ see cron
 
 ```service --status-all ```
 
+
 ## References
 https://medium.com/@ekeneejike/simple-bash-script-for-log-analysis-db003dd9be
 https://medium.com/@DefenderX/incident-response-on-linux-looking-into-right-places-e450db137c23
