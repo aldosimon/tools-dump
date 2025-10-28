@@ -1,4 +1,8 @@
-## file search, prettyfy etc.
+## file operation, prettyfy etc.
+
+### gzip deflate
+
+```gzip -d <file.ext.gz>```
 
 ### json to jq
 
