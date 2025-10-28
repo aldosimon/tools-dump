@@ -6,10 +6,7 @@ a place to store various tools, script and command.
 - I kept forgetting a command to do something
 
 # Access
-http://tiny.cc/tooldump
-
-- [app](./DFIR/app/)
-- [script](./DFIR/script/)
+[t.besecure.fyi](https://t.besecure.fyi)
 
 # ToDo
 - clean up
