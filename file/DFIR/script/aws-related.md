@@ -81,6 +81,19 @@ filter for `CreateAccessKey` and IAMUser
 cat <cloudtrail.json> | jq -cr '.Records[]| select(.eventName == "CreateAccessKey" and .userIdentity.type == "IAMUser")|[.sourceIPAddress, .userIdentity.arn, .responseElements.accessKey.createDate, .responseElements.accessKey.status, .responseElements.accessKey.accessKeyId, .errorCode, .errorMessage]|@csv'
 ```
 
+### search for ASIA or AKIA accessKeyId
+
+search in responseElements and in userIdentity. maybe combine with .eventname = createUser or assumeRole etc. in response elements.
+
+```
+cat cloudtrail.json | jq '.Records[]|select(.responseElements.credentials.accessKeyId and (.responseElements.credentials.accessKeyId|contains("ASIA")))|[.eventName]'
+```
+
+```
+cat cloudtrail.json | jq '.Records[] | select(.userIdentity.accessKeyId and (.userIdentity.accessKeyId | contains("ASIA")))'
+```
+
+
 ### references
 
 https://medium.com/@george.fekkas/quick-and-dirty-cloudtrail-threat-hunting-log-analysis-b64af10ef923
