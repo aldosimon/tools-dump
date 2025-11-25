@@ -81,16 +81,17 @@ filter for `CreateAccessKey` and IAMUser
 cat <cloudtrail.json> | jq -cr '.Records[]| select(.eventName == "CreateAccessKey" and .userIdentity.type == "IAMUser")|[.sourceIPAddress, .userIdentity.arn, .responseElements.accessKey.createDate, .responseElements.accessKey.status, .responseElements.accessKey.accessKeyId, .errorCode, .errorMessage]|@csv'
 ```
 
-### search for ASIA or AKIA accessKeyId
+### search for certain accessKeyId
 
-search in responseElements and in userIdentity. maybe combine with .eventname = createUser or assumeRole etc. in response elements.
+search for certain accessKeyId in responseElements and in userIdentity. 
+Maybe combine with .eventname = createUser or assumeRole etc. in response elements.
 
-```
-cat cloudtrail.json | jq '.Records[]|select(.responseElements.credentials.accessKeyId and (.responseElements.credentials.accessKeyId|contains("ASIA")))|[.eventName]'
+```bash
+cat cloudtrail.json | jq '.Records[]|select(.responseElements.credentials.accessKeyId and (.responseElements.credentials.accessKeyId|contains("AKIAxxx")))|[.eventName]'
 ```
 
-```
-cat cloudtrail.json | jq '.Records[] | select(.userIdentity.accessKeyId and (.userIdentity.accessKeyId | contains("ASIA")))'
+```bash
+cat cloudtrail.json | jq '.Records[] | select(.userIdentity.accessKeyId and (.userIdentity.accessKeyId | contains("AKIAxxx")))'
 ```
 
 
