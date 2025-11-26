@@ -94,8 +94,23 @@ cat cloudtrail.json | jq '.Records[]|select(.responseElements.credentials.access
 cat cloudtrail.json | jq '.Records[] | select(.userIdentity.accessKeyId and (.userIdentity.accessKeyId | contains("AKIAxxx")))'
 ```
 
+### S3 activities with requestParameters filter
+
+eventname related to S3 that you can play with: CreateBucket, DeleteBucket, PutBucketPolicy. Also some are data events, which are not on by default (PutObject, GetObject, DeleteObject, ListObject)
+
+```bash
+cat cloudtrail.json | jq '.Records[] | select(.eventName=="CreateBucket" and (.requestParameters | (.. | strings) | contains("stole")))'
+```
+here if you wan't specific for bucketName, Key, etc.
+
+```bash
+cat cloudtrail.json | jq '.Records[] | select(.eventName=="CreateBucket" and (.requestParameters.bucketName? // "" | contains("stole")))'
+```
+
+different from the .userIdentity above, if .requestParameters is null it will return false (boelan) and it'll need `bucketName? // ""` to turn it into string.
 
 ### references
 
 https://medium.com/@george.fekkas/quick-and-dirty-cloudtrail-threat-hunting-log-analysis-b64af10ef923
 https://medium.com/@markohalloran99/analysing-cloudtrail-user-agents-for-aws-forensics-and-incident-response-94a8457fb3cc
+https://www.workshops.aws/categories/Incident%20Response

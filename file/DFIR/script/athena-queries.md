@@ -43,5 +43,15 @@ limit 10;
 SELECT * FROM "cloudtrail-table" WHERE json_extract_scalar(responseelements, '$.accessKey.accessKeyId') IS NOT NULL;
 ```
 
+### S3 activities with requestParameters filter
+
+eventname related to S3 that you can play with: CreateBucket, DeleteBucket, PutBucketPolicy. Also some are data events, which are not on by default (PutObject, GetObject, DeleteObject, ListObject)
+
+
+```
+SELECT eventtime, eventname, useridentity, sourceipaddress, useragent, requestparameters, responseelements FROM "cloudtrail-table" where eventname = 'CreateBucket' and requestparameters like '%we-stole-ur-data-%'
+```
+
+
 ## References
 https://catalog.us-east-1.prod.workshops.aws/workshops/6a8ad836-10a6-4694-9a3b-f53f193041de/en-US/detection/cloudtrail-1
